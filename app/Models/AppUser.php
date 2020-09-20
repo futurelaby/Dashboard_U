@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AppUser extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     public function UserRecord ()
     {
         return $this->hasOne('App\UserRecord');

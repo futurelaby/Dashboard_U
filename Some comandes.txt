@@ -1,0 +1,44 @@
+Create project: 
+composer create-project laravel\laravel projectName
+
+laravel ui:
+composer require laravel/ui
+php artisan ui bootstrap
+npm install
+npm run dev
+npm run watch
+
+--in case of error:
+npm cache clear --force
+delete node_modules
+delete package-lock.json
+npm install 
+
+auth:
+composer require laravel/ui
+php artisan ui bootstrap
+php artisan ui bootstrap --auth
+
+
+
+php artisan make:controller controllerName --resource
+php artisan make:controller controllerName
+php artisan make:model modelName -m
+php artisan make:migration migrationName 
+php artisan migrate
+php artisan route:list
+php artisan tinker
+
+
+AppServiceProvider.php:
+use Illuminate\Support\Facades\Schema;
+public function register()
+    {
+        Schema::defaultStringLength(191);
+    }
+
+github :
+git status
+git add .
+git commit -m "commitName"
+git push

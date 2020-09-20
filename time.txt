@@ -1,0 +1,12 @@
+19-9-2020 : 
+1h : think about models and controllers and create them 
+	10min					50 min
+not so sure this is the way to go.
+
+20-9-2020:
+5h : 
+- create the auth system
+- routes
+- create the main homePage with student modal 
+- solve problems with npm and write the "some comands.txt file"
+ready to think how to get data and show it, then redecorate the frontend agian 
