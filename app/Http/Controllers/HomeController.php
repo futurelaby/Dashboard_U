@@ -104,7 +104,6 @@ class HomeController extends Controller
             'StudentName' =>'required',
             'Student_id' =>'required'
         ]);
-        return $id;
         $user = AppUser::find($id);
         $user->username = $request->StudentName;
         $user->student_id = $request->Student_id;
