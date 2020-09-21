@@ -10,3 +10,11 @@ not so sure this is the way to go.
 - create the main homePage with student modal 
 - solve problems with npm and write the "some comands.txt file"
 ready to think how to get data and show it, then redecorate the frontend agian 
+
+21-9-2020:
+8.5h:
+- work on backend
+	-select data from database 
+	-update data in database
+-update modal with DB data using jquery
+-try use blade to update modal's data insted of jquery (but did not work)

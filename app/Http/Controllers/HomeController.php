@@ -99,7 +99,17 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $this->validate($request,[
+            'StudentName' =>'required',
+            'Student_id' =>'required'
+        ]);
+        return $id;
+        $user = AppUser::find($id);
+        $user->username = $request->StudentName;
+        $user->student_id = $request->Student_id;
+        $user->save();
+        return redirect('/');
     }
 
     /**
@@ -110,6 +120,8 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = AppUser::find($id);
+        $user->delete();
+        return redirect('/');
     }
 }

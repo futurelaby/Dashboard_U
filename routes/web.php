@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-
+// Route::get('/update', 'App\Http\Controllers\HomeController@update');
 Route::resource('AppUsers','App\Http\Controllers\HomeController');
+
 // Route::get('AppUsers/{id}/edit/','App\Http\Controllers\HomeController@edit');
 
 Route::get('/test', function () {
