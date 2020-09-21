@@ -11,10 +11,10 @@ class AppUser extends Model
     public $timestamps = false;
     public function UserRecord ()
     {
-        return $this->hasOne('App\UserRecord');
+        return $this->hasOne('App\Models\UserRecord' , 'AppUser_id');
     }
     public function UsingRecord()
     {
-        return $this->hasOne('App\UsingRecord');
+        return $this->hasOne('App\Models\UsingRecord' , 'AppUser_id');
     }
 }

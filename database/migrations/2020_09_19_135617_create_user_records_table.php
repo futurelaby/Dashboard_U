@@ -13,6 +13,7 @@ class CreateUserRecordsTable extends Migration
      */
     public function up()
     {
+        if(!Schema::hasTable('user_records')){
         Schema::create('user_records', function (Blueprint $table) {
             $table->id();
             $table->timestamp('create_account_date');
@@ -21,6 +22,7 @@ class CreateUserRecordsTable extends Migration
             $table->string('passward' ,100);
             //$table->timestamps();
         });
+    }
     }
 
     /**

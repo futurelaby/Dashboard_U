@@ -13,6 +13,7 @@ class CreateAppUsersTable extends Migration
      */
     public function up()
     {
+        if(!Schema::hasTable('app_users')){
         Schema::create('app_users', function (Blueprint $table) {
             $table->id();
             $table->string('username');
@@ -20,6 +21,7 @@ class CreateAppUsersTable extends Migration
             $table->string('status');
             //$table->timestamps();
         });
+    }
     }
 
     /**

@@ -11,6 +11,6 @@ class UsingRecord extends Model
     
     public function user()
     {
-        return $this->belongsTo('App\AppUser');
+        return $this->belongsTo('App\Models\AppUser');
     }
 }

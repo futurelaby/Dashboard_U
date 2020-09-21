@@ -13,6 +13,8 @@ class CreateUsingRecordsTable extends Migration
      */
     public function up()
     {
+        if(!Schema::hasTable('using_records'))
+        {
         Schema::create('using_records', function (Blueprint $table) {
             $table->id();
             $table->string('device_id',100);
@@ -26,6 +28,7 @@ class CreateUsingRecordsTable extends Migration
 
             $table->timestamps();
         });
+    }
     }
 
     /**

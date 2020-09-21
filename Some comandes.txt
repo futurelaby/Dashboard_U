@@ -19,7 +19,8 @@ composer require laravel/ui
 php artisan ui bootstrap
 php artisan ui bootstrap --auth
 
-
+blade forms :
+composer require laravelcollective/html
 
 php artisan make:controller controllerName --resource
 php artisan make:controller controllerName
@@ -30,7 +31,7 @@ php artisan route:list
 php artisan tinker
 
 
-AppServiceProvider.php:
+To set string default length :AppServiceProvider.php:
 use Illuminate\Support\Facades\Schema;
 public function register()
     {

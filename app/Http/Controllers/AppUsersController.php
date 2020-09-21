@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AppUser;
+
+use Redirect,Response;
 
 class AppUsersController extends Controller
 {
@@ -13,7 +16,7 @@ class AppUsersController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
