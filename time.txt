@@ -18,3 +18,23 @@ ready to think how to get data and show it, then redecorate the frontend agian
 	-update data in database
 -update modal with DB data using jquery
 -try use blade to update modal's data insted of jquery (but did not work)
+
+22-9-2020:
+2h: try to make modal call the update function in the controllers
+PS: in the toturial they use store dunction for both update and create to avoid 
+sending the id to form url with jquery
+solution: control form action with jquery to add user id to it 
+52 min:
+make delete button work and add user in the home.blade.php
+spend good time on making div collapse (it was ez to make it disapear and appear without collapse)
+20 min:
+problem: jquery does not show studnetname or student_id in modal 
+solution: after adding (add user div) in the (home.blade.php) there were doubled ids so jquery changed the first element with id
+18 min :
+add button functionality (users added but without UsingRecord and userRecord)
+form with method "POST" does not POST if did not use hidden input!
+25 min : 
+work on Eloquent events to create rows in usingRecord and userRecord when AppUser is added automatically
+20 min:
+make sure Add user,Delete user,update user  buttons is working with showing user data if exists and 
+"no user data" in case of no data available 
