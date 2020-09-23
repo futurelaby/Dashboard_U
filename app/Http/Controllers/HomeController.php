@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AppUser;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Facade\FlareClient\Http\Response as HttpResponse;
 //use Facade\FlareClient\Http\Response as HttpResponse;
 use Redirect;
@@ -29,11 +32,13 @@ class HomeController extends Controller
     public function index()
     {
         $usersnumber = AppUser::count();
+        $Loggedin_number = AppUser::where('status',"loggedin")->count();
         $appUsers = AppUser::All();
         // $data = "";
         $data = array(
             'usersnumber'=> $usersnumber,
-            'appUsers'=>$appUsers
+            'appUsers'=>$appUsers,
+            'Loggedin_number'=>$Loggedin_number
         );
         return view('home') ->with($data);
 
@@ -142,5 +147,44 @@ class HomeController extends Controller
         {
             return redirect('/')->with('message','success');
         }
+    }
+    public function deleteAll(Request $request)
+    {
+        $this->validate($request,[
+            'checked' =>'required'
+        ]);
+        $checked = $request->checked;
+        $ids =implode(",",$checked);
+        AppUser::whereIn('id',explode(",",$ids))->delete();
+        return redirect('/');
+        // $checked = Request::input('checked',[]);
+        foreach ($checked as $id) {
+            AppUser::where("id",$id)->delete(); //Assuming you have a Todo model. 
+        }
+        return view("/");
+        // $ids = $request->ids;
+        // AppUser::whereIn('id',explode(",",$ids))->delete();
+        // return response()->json(['success'=>"Products Deleted successfully."]);
+        // return view('AppUsers.index');
+        // return redirect('/')->with('success' ,'Post Deleted');
+    }
+    
+   
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+   
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import() 
+    {
+        Excel::import(new UsersImport,request()->file('file'));
+           
+        return back();
     }
 }

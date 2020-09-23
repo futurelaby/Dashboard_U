@@ -1,5 +1,6 @@
 Create project: 
 composer create-project laravel\laravel projectName
+composer create-project --prefer-dist laravel/laravel blog
 
 laravel ui:
 composer require laravel/ui
@@ -30,6 +31,8 @@ php artisan migrate
 php artisan route:list
 php artisan tinker
 
+create dumy rows :
+App\Models\User::factory()->count(20)->create();
 
 To set string default length :AppServiceProvider.php:
 use Illuminate\Support\Facades\Schema;

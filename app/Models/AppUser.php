@@ -9,6 +9,7 @@ class AppUser extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['username','student_id'];
     public function UserRecord ()
     {
         return $this->hasOne('App\Models\UserRecord' , 'AppUser_id');

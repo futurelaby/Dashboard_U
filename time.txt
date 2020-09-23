@@ -38,3 +38,23 @@ work on Eloquent events to create rows in usingRecord and userRecord when AppUse
 20 min:
 make sure Add user,Delete user,update user  buttons is working with showing user data if exists and 
 "no user data" in case of no data available 
+
+work for tomorrow : 
+done -make delete users button work (time expected 1h)
+done -add using time to modal (time expected 10 min)
+done -show last update in modal (time expected 15 min)
+done -add loged in users number to home page (time expected 20 min)
+-try to make front end looks better (time expected )
+
+23-9-2020:
+add using time to modal + show last update in modal : 50min
+get data took 10 min for both , formating date took 30 min, formating display 10min
+add loged in users number to home page 8 min
+make delete users button work :50 min 
+worked with ajax but page does not refresh automatically ,so i need to try another way
+make delete users button work :45 min 
+worked with form submit, but more time is needed to more understand 
+1h : add import and export users to dashboard 
+
+for tomorrow :
+- make the fornt end of hte import and export 

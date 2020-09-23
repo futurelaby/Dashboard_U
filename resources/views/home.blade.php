@@ -8,7 +8,7 @@
             <h3 class="card-title"> Data </h3>
             <div class="card-body">
                 <h5> users number : {{$usersnumber}} </h5>
-                <h5> logins: </h5>
+                <h5> logins: {{$Loggedin_number}}</h5>
             </div>
         </div>
     </div>
@@ -32,7 +32,11 @@
                 <tbody>
                     @foreach ($appUsers as $user)
                         <tr>
-                            <td><input name = {{$user['id']}}  type="checkbox"/>
+                            <form action="/deleteAll" method="POST" onsubmit="return confirm('Are you sure you want to delete these users?') ">
+                            {{csrf_field()}}
+                            <input type="hidden" name="_method" value="DELETE">
+
+                            <td><input name = "checked[]" value="{{$user['id']}}" type="checkbox"/> {{-- name ={{$user['id']}}--}}
                             <td>{{$user['student_id']}}</td>
                             <td>{{$user['username']}}</td>
                             <td>{{$user->UserRecord['create_account_date']}}</td>
@@ -55,8 +59,13 @@
         <div class="card-footer">
             
             {{-- <button class="btn btn-primary" data-toggle="collapse" data-target="#AddUserDiv">Add user</button> --}}
-            <button class="btn btn-primary" onclick="Adduser()">Add user</button>
-            <button class="btn btn-danger" onclick="Delete()">Delete user</button>
+            
+            <button type="button" class="btn btn-primary" onclick="Adduser()">Add user</button>
+            <button type="submit" class="btn btn-danger" >Delete users</button>
+            
+    </form>
+            {{-- onclick="Delete()" --}}
+        
         </div>
         <div  class="card-body collapse" id ="AddUserDiv">
             <h5>Add user:</h5>
@@ -72,6 +81,13 @@
                     <input type="text" class="form-control" id="Student_id" aria-describedby="emailHelp" name="Student_id" style="width: 30%">
                 </div>
                 <button type="submit" class="btn btn-primary" >Submit</button>
+            </form>
+            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="form-control">
+                <br>
+                <button class="btn btn-success">Import User Data</button>
+                <a class="btn btn-warning" href="{{ route('export') }}">Export User Data</a>
             </form>
         </div>
     </div>
@@ -108,7 +124,7 @@
           </div>
 
           <div class="modal-body" id ="userData">
-              
+
           </div>
 
           <div class="modal-footer">
@@ -122,6 +138,7 @@
           <input type="hidden" name="_method" value="DELETE">
           <button type="submit" class="btn btn-danger" name = "id" id="DeleteButton">Delete</button>
         </form>
+        
     </div>
   </div>
 </div>
@@ -132,20 +149,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script>
+var dataTable ;
+var checkItAll ;
+var inputs ;
 
-// function validateMyForm()
-// {
-//     if(check if your conditions are not satisfying)
-//     { 
-//         alert("validation failed false");
-//         returnToPreviousPage();
-//         return false;
-//     }
-
-//     alert("validations passed");
-//     return true;
-// }
-
+function Delete()
+{
+    var ids = '';
+    var num = 0 ;
+    inputs.forEach(function(input) {
+        if(input.checked)
+        {
+            ids += input.name+',';
+            num++;
+        }
+    });
+    var check = confirm("Are you sure you want to delete "+num+" rows?");  
+    if(check && ids.length>1)
+    {
+        $.ajax({
+            url: '/deleteAll',
+            type: 'DELETE',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: 'ids='+ids
+            // success: function (data) {
+            //     if (data['success']) {
+            //         $(".sub_chk:checked").each(function() {  
+            //             $(this).parents("tr").remove();
+            //         });
+            //         alert(data['success']);
+            //     } else if (data['error']) {
+            //         alert(data['error']);
+            //     } else {
+            //         alert('Whoops Something went wrong!!');
+            //     }
+            // },
+            // error: function (data) {
+            //     alert(data.responseText);
+            // }
+        });
+    }
+    
+}
 $(document).ready(function(){
 
     /* Edit customer */
@@ -183,18 +228,22 @@ $(document).ready(function(){
 
                 }
                 html += '</tr></tbody></table>';
+                html += '<div class="row">';
+                html += '<h5 class="col-lg-6">Total usage time:'+data.using_record.app_usage_time+'</h5>';
+                html += '<h5 class="col-lg-6">last update:'+data.using_record.updated_at+'</h5></div>';
+                
             }
             else{
                 console.log("no data");
-                html +='<h3>No data</h3>';
+                html +='<h3  >No data</h3>';
             }
             $('#userData').html(html);
         })
     });
 
-    var dataTable = document.getElementById('data-table');
-    var checkItAll = dataTable.querySelector('input[name="select_all"]');
-    var inputs = dataTable.querySelectorAll('tbody>tr>td>input');
+    dataTable = document.getElementById('data-table');
+    checkItAll = dataTable.querySelector('input[name="select_all"]');
+    inputs = dataTable.querySelectorAll('tbody>tr>td>input');
     checkItAll.addEventListener('change', function() 
     {
         if (checkItAll.checked) {
@@ -209,21 +258,31 @@ $(document).ready(function(){
             });  
         }
     });
+    
+    
 })
 
-    
-var collapse = true;
-    function Adduser()
-    {
-        if(collapse)
-            {$('#AddUserDiv').collapse('show');}
-        else
-            {$('#AddUserDiv').collapse('hide');}
-        collapse= !collapse;
-    }
-    function Delete()
-    {
-        
-    }
 
+var collapse = true;
+function Adduser()
+{
+    if(collapse)
+        {$('#AddUserDiv').collapse('show');}
+    else
+        {$('#AddUserDiv').collapse('hide');}
+    collapse= !collapse;
+}
+// function validateMyForm()
+// {
+//     if(check if your conditions are not satisfying)
+//     { 
+//         alert("validation failed false");
+//         returnToPreviousPage();
+//         return false;
+//     }
+
+//     alert("validations passed");
+//     return true;
+// }
 </script>
+

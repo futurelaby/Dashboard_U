@@ -13,4 +13,9 @@ class UsingRecord extends Model
     {
         return $this->belongsTo('App\Models\AppUser');
     }
+    public function getUpdatedAtAttribute($value)
+    {
+        //date('H:i:s', strtotime($value));
+        return date('d/m/Y', strtotime($value));
+    }
 }
